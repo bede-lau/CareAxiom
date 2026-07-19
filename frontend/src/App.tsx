@@ -232,7 +232,7 @@ export function App() {
           </button>
           <div className="brand-mark" aria-hidden="true"><HeartPulse size={20} /></div>
           <div>
-            <strong>Medical Desert Planner</strong>
+            <strong>CareAxiom</strong>
             <span>Evidence-grounded planning workspace</span>
           </div>
         </div>

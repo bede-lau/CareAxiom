@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import shutil
 import subprocess
 from pathlib import Path
@@ -23,6 +24,28 @@ def run(command: list[str]) -> None:
     completed = subprocess.run(command, cwd=REPO_ROOT, check=False)
     if completed.returncode != 0:
         raise SystemExit(completed.returncode)
+
+
+def resolve_npm_executable(platform_name: str | None = None) -> str:
+    platform_name = platform_name or os.name
+    candidates = ("npm.cmd", "npm.exe") if platform_name == "nt" else ("npm",)
+    for candidate in candidates:
+        executable = shutil.which(candidate)
+        if executable:
+            return executable
+
+    if platform_name == "nt":
+        for environment_name in ("ProgramFiles", "ProgramFiles(x86)"):
+            program_files = os.environ.get(environment_name)
+            if not program_files:
+                continue
+            fallback_executable = Path(program_files) / "nodejs" / "npm.cmd"
+            if fallback_executable.is_file():
+                return str(fallback_executable)
+
+    raise FileNotFoundError(
+        "npm was not found. Install Node.js or add its installation directory to PATH."
+    )
 
 
 def copy_required(source: Path, destination: Path) -> None:
@@ -60,19 +83,21 @@ def main() -> int:
     if expected_parent not in output.parents:
         raise ValueError(f"Artifact output must remain under {expected_parent}")
 
+    if output.exists():
+        shutil.rmtree(output)
+
     if not args.skip_build:
         lockfile = REPO_ROOT / "package-lock.json"
         if not lockfile.exists():
             raise FileNotFoundError(
                 "package-lock.json is required for the reproducible frontend build"
             )
-        run(["npm", "ci"])
-        run(["npm", "run", "build"])
+        npm = resolve_npm_executable()
+        run([npm, "ci"])
+        run([npm, "run", "build"])
     if not (STATIC_ROOT / "index.html").exists():
         raise FileNotFoundError("Frontend build did not produce presentation/static/index.html")
 
-    if output.exists():
-        shutil.rmtree(output)
     output.mkdir(parents=True)
 
     for relative in (

@@ -37,9 +37,7 @@ resources:
       environments:
         - environment_key: default
           spec:
-            client: "2"
-            dependencies:
-              - ../
+            environment_version: "5"
       schedule:
         quartz_cron_expression: "0 0 3 ? * SUN"
         timezone_id: Asia/Kuala_Lumpur

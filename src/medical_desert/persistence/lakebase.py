@@ -1,12 +1,16 @@
 from __future__ import annotations
 
 import os
+import re
 from collections.abc import Generator
 from contextlib import contextmanager
 from pathlib import Path
 from typing import Any
 
+from medical_desert.orchestration.sql import split_sql_statements
 from medical_desert.persistence.sqlite import SQLiteOperationalStore
+
+_IDENTIFIER = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
 
 
 class _PostgresCompatibilityConnection:
@@ -26,6 +30,10 @@ class _PostgresCompatibilityConnection:
         self.connection.commit()
 
 
+def read_schema_statements(schema_path: Path) -> list[str]:
+    return split_sql_statements(schema_path.read_text(encoding="utf-8"))
+
+
 class LakebaseOperationalStore(SQLiteOperationalStore):
     def __init__(
         self,
@@ -34,6 +42,7 @@ class LakebaseOperationalStore(SQLiteOperationalStore):
         database: str,
         endpoint_name: str,
         user: str | None = None,
+        schema: str = "medical_desert",
         port: int = 5432,
         sslmode: str = "require",
         schema_path: Path = Path("sql/lakebase_schema.sql"),
@@ -43,6 +52,9 @@ class LakebaseOperationalStore(SQLiteOperationalStore):
         self.database = database
         self.endpoint_name = endpoint_name
         self.user = user or os.environ.get("DATABRICKS_CLIENT_ID")
+        if not _IDENTIFIER.fullmatch(schema):
+            raise ValueError("Lakebase schema must be a simple SQL identifier.")
+        self.schema = schema
         self.port = port
         self.sslmode = sslmode
         self.schema_path = schema_path
@@ -94,17 +106,18 @@ class LakebaseOperationalStore(SQLiteOperationalStore):
     @contextmanager
     def _connection(self) -> Generator[Any, None, None]:
         with self._pool.connection() as connection:
-            yield _PostgresCompatibilityConnection(connection)
+            compatible = _PostgresCompatibilityConnection(connection)
+            compatible.execute(
+                f'CREATE SCHEMA IF NOT EXISTS "{self.schema}" AUTHORIZATION CURRENT_USER'
+            )
+            compatible.execute(f'SET search_path TO "{self.schema}"')
+            yield compatible
 
     def initialize(self) -> None:
         if not self.schema_path.exists():
             raise FileNotFoundError(f"Lakebase schema not found: {self.schema_path}")
         self._pool.open(wait=True)
-        statements = [
-            statement.strip()
-            for statement in self.schema_path.read_text(encoding="utf-8").split(";")
-            if statement.strip()
-        ]
+        statements = read_schema_statements(self.schema_path)
         with self._connection() as connection:
             for statement in statements:
                 connection.execute(statement)

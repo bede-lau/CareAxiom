@@ -65,6 +65,7 @@ sync:
     - artifacts/data-contracts/**
   exclude:
     - .dist/rendered-sql/**
+    - outputs/**
 
 targets:
   dev:

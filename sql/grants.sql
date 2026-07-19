@@ -1,11 +1,14 @@
--- Replace placeholders before execution. Grant only project-owned objects.
+-- Replace service-principal placeholders with their applicationId UUID values.
+-- Grant only project-owned objects.
 GRANT USE CATALOG ON CATALOG {{project_catalog}} TO `{{app_service_principal}}`;
+GRANT USE SCHEMA ON SCHEMA {{project_catalog}}.bronze TO `{{app_service_principal}}`;
+GRANT SELECT ON TABLE {{project_catalog}}.bronze.facility_source_snapshot TO `{{app_service_principal}}`;
 GRANT USE SCHEMA ON SCHEMA {{project_catalog}}.gold TO `{{app_service_principal}}`;
 GRANT SELECT ON SCHEMA {{project_catalog}}.gold TO `{{app_service_principal}}`;
+GRANT MODIFY ON TABLE {{project_catalog}}.gold.facility_review_overlay TO `{{app_service_principal}}`;
+GRANT MODIFY ON TABLE {{project_catalog}}.gold.operational_event_materialization TO `{{app_service_principal}}`;
 GRANT USE SCHEMA ON SCHEMA {{project_catalog}}.silver TO `{{app_service_principal}}`;
-GRANT SELECT ON TABLE {{project_catalog}}.silver.capability_dimension TO `{{app_service_principal}}`;
-GRANT SELECT ON TABLE {{project_catalog}}.silver.analysis_origin TO `{{app_service_principal}}`;
-GRANT SELECT ON TABLE {{project_catalog}}.silver.district_survey_context TO `{{app_service_principal}}`;
+GRANT SELECT ON SCHEMA {{project_catalog}}.silver TO `{{app_service_principal}}`;
 
 GRANT USE CATALOG ON CATALOG {{project_catalog}} TO `{{pipeline_service_principal}}`;
 GRANT USE SCHEMA ON SCHEMA {{project_catalog}}.bronze TO `{{pipeline_service_principal}}`;

@@ -192,7 +192,7 @@ class MedicalDesertService:
             return trace_id
         except Exception as error:
             self._trace_error = type(error).__name__
-            return self.tracing.trace_id()
+            return f"unpersisted:{self.tracing.trace_id()}"
 
     def capabilities(self) -> list[Capability]:
         scoring = load_yaml_config("scoring.yaml")

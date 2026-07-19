@@ -19,9 +19,17 @@ resources:
           - name: MEDICAL_DESERT_DATABRICKS_HTTP_PATH
             value: ${var.sql_warehouse_http_path}
           - name: MEDICAL_DESERT_MLFLOW_ENABLED
-            value: "true"
+            value: "false"
+          - name: MLFLOW_TRACKING_URI
+            value: databricks
+          - name: MLFLOW_HTTP_REQUEST_TIMEOUT
+            value: "5"
+          - name: MLFLOW_HTTP_REQUEST_MAX_RETRIES
+            value: "0"
+          - name: MLFLOW_ASYNC_TRACE_LOGGING_RETRY_TIMEOUT
+            value: "5"
           - name: MEDICAL_DESERT_MLFLOW_EXPERIMENT_NAME
-            value: /Shared/${bundle.name}/${bundle.target}/orchestration
+            value: /Shared/${bundle.name}-${bundle.target}-orchestration
           - name: MEDICAL_DESERT_TAVILY_MODE
             value: cached
           - name: MEDICAL_DESERT_PROJECT_CATALOG

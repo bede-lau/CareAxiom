@@ -5,7 +5,32 @@ import json
 import sys
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parents[1]
+
+def resolve_repo_root(
+    file_name: str | None,
+    argv: list[str],
+    working_directory: Path | None = None,
+) -> Path:
+    entrypoints = [value for value in (file_name, argv[0] if argv else None) if value]
+    for entrypoint in entrypoints:
+        path = Path(entrypoint).resolve()
+        if path.name == "run_pipeline.py" and path.parent.name == "scripts":
+            return path.parents[1]
+
+    current = (working_directory or Path.cwd()).resolve()
+    for candidate in (current, *current.parents):
+        if (candidate / "databricks.yml").is_file() and (
+            candidate / "scripts" / "run_pipeline.py"
+        ).is_file():
+            return candidate
+
+    raise RuntimeError("Unable to locate the Medical Desert Planner bundle root.")
+
+
+REPO_ROOT = resolve_repo_root(
+    globals().get("__file__") or globals().get("filename"),
+    sys.argv,
+)
 SRC_ROOT = REPO_ROOT / "src"
 if str(SRC_ROOT) not in sys.path:
     sys.path.insert(0, str(SRC_ROOT))
@@ -115,5 +140,11 @@ def main() -> int:
     return 0
 
 
+def run_entrypoint() -> None:
+    exit_code = main()
+    if exit_code:
+        raise SystemExit(exit_code)
+
+
 if __name__ == "__main__":
-    raise SystemExit(main())
+    run_entrypoint()

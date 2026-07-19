@@ -1,0 +1,53 @@
+{
+  "contract_version": "1.0.0",
+  "bronze": [
+    "source_bundle_manifest",
+    "facility_source_snapshot",
+    "india_post_office_snapshot",
+    "nfhs5_district_snapshot"
+  ],
+  "silver": [
+    "facility_row_integrity",
+    "facility_entity",
+    "facility_normalized",
+    "facility_field_parse",
+    "source_artifact",
+    "facility_claim",
+    "extraction_assertion",
+    "evidence_span",
+    "evidence_relation",
+    "facility_quality_signal",
+    "web_evidence",
+    "claim_validation",
+    "postal_office_normalized",
+    "pin_postal_reference",
+    "analysis_origin",
+    "district_identity_crosswalk",
+    "nfhs_indicator_observation",
+    "district_survey_context",
+    "geography_dimension",
+    "capability_dimension"
+  ],
+  "gold": [
+    "facility_documentary_support",
+    "regional_documentary_evidence_summary",
+    "analysis_origin_facility_distance",
+    "district_context_profile",
+    "planning_priority_candidate",
+    "verification_priority",
+    "facility_evidence_document",
+    "scenario_change_feed",
+    "facility_review_overlay",
+    "operational_event_materialization"
+  ],
+  "separation_invariants": [
+    "NFHS observations are district survey context only.",
+    "NFHS fields cannot contribute to facility_documentary_support.",
+    "NFHS removal cannot change observed_record_assessability.",
+    "Postal references are not PIN centroids or population origins.",
+    "PIN administrative labels are source evidence, not geographic truth.",
+    "Coordinate or city conflicts with PIN labels create a retained location_conflict quality signal.",
+    "Analysis origins exist independently of facility presence.",
+    "Missing fields are not negative clinical evidence."
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "fixture_version": "2026-07-19.1",
+  "cases": [
+    {"case_id": "tavily-timeout", "adapter": "tavily", "failure": "timeout", "expected_mode": "cached", "expected_network_attempts_after_fallback": 0},
+    {"case_id": "tavily-unauthorized", "adapter": "tavily", "failure": "401", "expected_mode": "cached", "expected_secret_in_output": false},
+    {"case_id": "search-unavailable", "adapter": "ai_search", "failure": "service_unavailable", "expected_fallback": "structured_sql"},
+    {"case_id": "model-timeout", "adapter": "model_serving", "failure": "timeout", "expected_fallback": "deterministic_orchestration"},
+    {"case_id": "lakebase-reconnect", "adapter": "lakebase", "failure": "connection_closed", "expected_retry": "idempotent_reconnect"},
+    {"case_id": "recalculation-trigger-failure", "adapter": "recalculation_job", "failure": "trigger_failed", "expected_state": "update_pending"}
+  ]
+}

@@ -1,0 +1,74 @@
+resources:
+  apps:
+    medical_desert_planner:
+      name: ${var.app_name}
+      description: Evidence-grounded Medical Desert Planner
+      source_code_path: ../.dist/react-app
+      config:
+        command:
+          - python
+          - -m
+          - medical_desert.api.main
+        env:
+          - name: MEDICAL_DESERT_ENVIRONMENT
+            value: production
+          - name: MEDICAL_DESERT_IDENTITY_MODE
+            value: single_team_demo
+          - name: MEDICAL_DESERT_DATABRICKS_ENABLED
+            value: "true"
+          - name: MEDICAL_DESERT_DATABRICKS_HTTP_PATH
+            value: ${var.sql_warehouse_http_path}
+          - name: MEDICAL_DESERT_MLFLOW_ENABLED
+            value: "true"
+          - name: MEDICAL_DESERT_MLFLOW_EXPERIMENT_NAME
+            value: /Shared/${bundle.name}/${bundle.target}/orchestration
+          - name: MEDICAL_DESERT_TAVILY_MODE
+            value: cached
+          - name: MEDICAL_DESERT_PROJECT_CATALOG
+            value: ${var.project_catalog}
+          - name: MEDICAL_DESERT_ANALYTICAL_SOURCE_BUNDLE_ID
+            value: ${var.source_bundle_id}
+          - name: MEDICAL_DESERT_POLICY_VERSION
+            value: ${var.policy_version}
+          - name: MEDICAL_DESERT_SCORING_VERSION
+            value: ${var.policy_version}
+          - name: MEDICAL_DESERT_FOCUS_STATE
+            value: ${var.focus_state}
+          - name: MEDICAL_DESERT_FOCUS_DISTRICT
+            value: ${var.focus_district}
+          - name: MEDICAL_DESERT_LAKEBASE_ENABLED
+            value: "true"
+          - name: MEDICAL_DESERT_LAKEBASE_HOST
+            value: ${var.lakebase_host}
+          - name: MEDICAL_DESERT_LAKEBASE_DATABASE
+            value: ${var.lakebase_database_name}
+          - name: MEDICAL_DESERT_LAKEBASE_ENDPOINT_NAME
+            value_from: lakebase-database
+          - name: TAVILY_API_KEY
+            value_from: tavily-api-key
+      resources:
+        - name: sql-warehouse
+          sql_warehouse:
+            id: ${var.sql_warehouse_id}
+            permission: CAN_USE
+        - name: recalculation-job
+          job:
+            id: ${resources.jobs.recalculation.id}
+            permission: CAN_MANAGE_RUN
+        - name: mlflow-experiment
+          experiment:
+            experiment_id: ${resources.experiments.medical_desert.id}
+            permission: CAN_EDIT
+        - name: lakebase-database
+          postgres:
+            branch: ${var.lakebase_branch}
+            database: ${var.lakebase_database}
+            permission: CAN_CONNECT_AND_CREATE
+        - name: tavily-api-key
+          secret:
+            scope: ${var.tavily_secret_scope}
+            key: ${var.tavily_secret_key}
+            permission: READ
+      permissions:
+        - level: CAN_USE
+          group_name: ${var.app_access_group}

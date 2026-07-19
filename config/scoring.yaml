@@ -1,0 +1,33 @@
+version: documentary-scoring-2026-07-19
+factor_maxima:
+  direct_evidence_specificity: 30
+  independent_source_corroboration: 20
+  source_quality: 15
+  entity_attribution_quality: 15
+  freshness: 10
+  prerequisite_support: 10
+bands:
+  strongly_supported: 75
+  partially_supported: 50
+  claim_only_or_weak: 25
+regional:
+  radius_presets_km: [10, 25, 50]
+  assessability_high_threshold: 0.65
+  qualifying_support_threshold: 50
+  strong_minimum_facilities: 1
+assessability:
+  source_structural_integrity_rate: 0.15
+  geography_resolution_rate: 0.25
+  traceable_source_rate: 0.20
+  capability_assessment_completion_rate: 0.20
+  entity_resolution_rate: 0.10
+  freshness_known_rate: 0.10
+  unresolved_contradiction_rate: -0.15
+  ambiguous_geography_rate: -0.15
+priority:
+  version: verification-priority-2026-07-19
+  classification_flip_potential: 0.40
+  map_cells_or_regions_affected: 0.25
+  active_scenario_references: 0.20
+  evidence_staleness: 0.10
+  unresolved_contradiction_severity: 0.05

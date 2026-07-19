@@ -1,0 +1,6 @@
+app.yaml
+pyproject.toml
+uv.lock
+src/medical_desert/**
+config/**
+artifacts/data-contracts/**

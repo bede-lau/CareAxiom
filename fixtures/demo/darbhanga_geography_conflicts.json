@@ -1,0 +1,30 @@
+{
+  "fixture_version": "2026-07-19.1",
+  "source": "tmp/darbhanga-facilities-compact.json",
+  "cases": [
+    {
+      "facility_id": "d5e1df16-5ee9-4ac3-a124-663d2b787f2f",
+      "name": "Lifecare Hospital",
+      "address_city": "Siwan",
+      "latitude": 26.19545555114746,
+      "longitude": 84.34469604492188,
+      "pincode": "846001",
+      "joined_district": "Darbhanga",
+      "expected_disposition": "quarantine_or_exclude_from_aggregate",
+      "expected_quality_flag": "pin_coordinate_city_conflict",
+      "expected_review_priority": "high"
+    },
+    {
+      "facility_id": "4ddde88c-fb72-4ed5-bfa0-8bf647bb3044",
+      "name": "Skin Hair Laser Clinic",
+      "address_city": "Purnea",
+      "latitude": 25.781612396240234,
+      "longitude": 87.48876953125,
+      "pincode": "846004",
+      "joined_district": "Darbhanga",
+      "expected_disposition": "quarantine_or_exclude_from_aggregate",
+      "expected_quality_flag": "pin_coordinate_city_conflict",
+      "expected_review_priority": "high"
+    }
+  ]
+}

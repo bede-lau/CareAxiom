@@ -1,0 +1,11 @@
+{
+  "fixture_version": "2026-07-19.1",
+  "workflows": [
+    {"workflow_id": "scenario-create-replay", "operation": "create", "idempotency_key": "idem-create-001", "expected_replay": "same_logical_result"},
+    {"workflow_id": "scenario-update-conflict", "operation": "update", "base_version": 1, "concurrent_versions": [2, 2], "expected": "one_success_one_conflict"},
+    {"workflow_id": "review-atomic-outbox", "operation": "review", "expected_atomic_records": ["review_decision", "audit_event", "outbox_event"]},
+    {"workflow_id": "outbox-replay", "operation": "materialize", "event_id": "evt-001", "attempts": 2, "expected_logical_applications": 1},
+    {"workflow_id": "stream-blocking", "operation": "materialize", "events": ["stream-a:1", "stream-a:2", "stream-b:1"], "fail": "stream-a:1", "expected_blocked": ["stream-a:2"], "expected_continues": ["stream-b:1"]},
+    {"workflow_id": "saved-snapshot-immutable", "operation": "review_after_save", "saved_version": "snapshot-1", "current_version": "snapshot-2", "expected_saved_version": "snapshot-1"}
+  ]
+}

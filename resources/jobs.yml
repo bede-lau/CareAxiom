@@ -1,0 +1,46 @@
+resources:
+  jobs:
+    recalculation:
+      name: ${bundle.name}-${bundle.target}-recalculation
+      description: Low-concurrency source bundle rebuild and backup recomputation
+      max_concurrent_runs: 1
+      queue:
+        enabled: true
+      parameters:
+        - name: source_bundle_id
+          default: ${var.source_bundle_id}
+        - name: policy_version
+          default: ${var.policy_version}
+        - name: geography_version
+          default: ${var.geography_version}
+      tasks:
+        - task_key: recalculate
+          spark_python_task:
+            python_file: ../scripts/run_pipeline.py
+            parameters:
+              - all
+              - --bootstrap
+              - --execute
+              - --project-catalog
+              - ${var.project_catalog}
+              - --source-catalog
+              - ${var.source_catalog}
+              - --source-schema
+              - ${var.source_schema}
+              - --source-bundle-id
+              - "{{job.parameters.source_bundle_id}}"
+              - --policy-version
+              - "{{job.parameters.policy_version}}"
+              - --geography-version
+              - "{{job.parameters.geography_version}}"
+          environment_key: default
+      environments:
+        - environment_key: default
+          spec:
+            client: "2"
+            dependencies:
+              - ../
+      schedule:
+        quartz_cron_expression: "0 0 3 ? * SUN"
+        timezone_id: Asia/Kuala_Lumpur
+        pause_status: PAUSED

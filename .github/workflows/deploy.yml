@@ -1,0 +1,64 @@
+name: deploy-databricks-app
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: prod
+    env:
+      DATABRICKS_AUTH_TYPE: github-oidc
+      DATABRICKS_HOST: ${{ vars.DATABRICKS_HOST }}
+      DATABRICKS_CLIENT_ID: ${{ vars.DATABRICKS_CLIENT_ID }}
+      BUNDLE_VAR_project_catalog: ${{ vars.PROJECT_CATALOG }}
+      BUNDLE_VAR_sql_warehouse_id: ${{ vars.SQL_WAREHOUSE_ID }}
+      BUNDLE_VAR_sql_warehouse_http_path: ${{ vars.SQL_WAREHOUSE_HTTP_PATH }}
+      BUNDLE_VAR_lakebase_branch: ${{ vars.LAKEBASE_BRANCH }}
+      BUNDLE_VAR_lakebase_database: ${{ vars.LAKEBASE_DATABASE_RESOURCE }}
+      BUNDLE_VAR_lakebase_host: ${{ vars.LAKEBASE_HOST }}
+      BUNDLE_VAR_lakebase_database_name: ${{ vars.LAKEBASE_DATABASE_NAME }}
+      BUNDLE_VAR_tavily_secret_scope: ${{ vars.TAVILY_SECRET_SCOPE }}
+      BUNDLE_VAR_app_access_group: ${{ vars.APP_ACCESS_GROUP }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install Databricks CLI
+        uses: databricks/setup-cli@main
+      - name: Build deployable application artifact
+        run: |
+          uv sync --all-groups --frozen
+          npm ci
+          uv run python scripts/package_app.py
+          uv run python scripts/validate_artifact.py
+      - name: Validate bundle
+        run: databricks bundle validate --target prod
+      - name: Deploy resources and source
+        run: databricks bundle deploy --target prod
+      - name: Build analytical read models
+        run: databricks bundle run recalculation --target prod
+      - name: Start or restart application
+        run: databricks bundle run medical_desert_planner --target prod
+      - name: Wait for application health
+        env:
+          APP_NAME: medical-desert-planner
+        run: |
+          for attempt in $(seq 1 20); do
+            state=$(databricks apps get "$APP_NAME" --output json | jq -r '.app_status.state')
+            echo "Attempt $attempt/20: state=$state"
+            if [ "$state" = "RUNNING" ]; then
+              exit 0
+            fi
+            sleep 15
+          done
+          echo "Application did not reach RUNNING within five minutes." >&2
+          exit 1

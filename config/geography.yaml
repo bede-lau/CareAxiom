@@ -1,0 +1,51 @@
+version: postal-median-v1
+country: IN
+coordinate_envelope:
+  latitude:
+    min: 6.5
+    max: 39.0
+  longitude:
+    min: 68.0
+    max: 98.0
+postal_reference:
+  method: coordinate_median
+  label: postal_reference_point
+  administrative_label_semantics: evidence_not_geographic_truth
+  prohibited_labels:
+    - pincode_centroid
+    - population_origin
+    - settlement_center
+  ambiguity:
+    state_candidate_limit: 1
+    district_candidate_limit: 1
+  dispersion:
+    warning_km: 25.0
+analysis_origins:
+  source: distinct_source_pins
+  retain_unavailable: true
+  expected_total: 19586
+  expected_mappable: 19550
+  expected_unavailable: 36
+radius_presets_km:
+  - 10
+  - 25
+  - 50
+maximum_distance_km: 50
+district_crosswalk:
+  key_fields:
+    - normalized_state
+    - normalized_district
+  fuzzy_matching: disabled
+  reviewed_aliases_required: true
+facility_location_conflicts:
+  enabled: true
+  coordinate_to_postal_reference_warning_km: 75.0
+  city_label_disagreement: review_required
+  aggregate_eligibility: exclude_until_resolved
+  preserve_original_pin_linkage: true
+district_geometry:
+  enabled: false
+  reason: No versioned, licensed district boundary asset has been approved.
+city_selection:
+  enabled: false
+  reason: Versioned city normalization quality has not passed G1.

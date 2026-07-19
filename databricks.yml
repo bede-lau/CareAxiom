@@ -1,0 +1,76 @@
+bundle:
+  name: medical-desert-planner
+  databricks_cli_version: ">= 0.283.0"
+
+include:
+  - resources/*.yml
+
+variables:
+  app_name:
+    description: Existing-safe name for the Databricks App managed by this bundle.
+    default: medical-desert-planner
+  app_access_group:
+    description: Approved workspace group allowed to use the single-team hackathon demo.
+    default: admins
+  project_catalog:
+    description: User-created project catalog. The bundle does not create it.
+    default: medical_desert
+  sql_warehouse_id:
+    description: User-created Serverless SQL warehouse ID.
+  sql_warehouse_http_path:
+    description: HTTP path for the selected Serverless SQL warehouse.
+  lakebase_branch:
+    description: Existing Lakebase branch resource name, for example projects/.../branches/production.
+    default: projects/medical_desert/branches/production
+  lakebase_database:
+    description: Existing Lakebase database resource name, for example projects/.../databases/....
+    default: projects/medical_desert/databases/databricks_postgres
+  lakebase_host:
+    description: Lakebase endpoint hostname from the Connect dialog.
+    default: ep-replace-me.database.us-east-2.cloud.databricks.com
+  lakebase_database_name:
+    description: PostgreSQL database name inside Lakebase.
+    default: databricks_postgres
+  tavily_secret_scope:
+    description: Existing Databricks secret scope containing the Tavily API key.
+    default: medical_desert_secrets
+  tavily_secret_key:
+    description: Existing secret key name for the Tavily API key.
+    default: TAVILY_API_KEY
+  source_catalog:
+    description: Read-only shared source catalog.
+    default: databricks_virtue_foundation_dataset_dais_2026
+  source_schema:
+    description: Read-only shared source schema.
+    default: virtue_foundation_dataset
+  source_bundle_id:
+    default: virtue-dais-2026-20260719
+  focus_state:
+    default: Bihar
+  focus_district:
+    default: Darbhanga
+  policy_version:
+    default: documentary-policy-v1
+  geography_version:
+    default: postal-median-v1
+
+sync:
+  include:
+    - .dist/react-app/**
+    - pipelines/**
+    - scripts/run_pipeline.py
+    - sql/**
+    - src/medical_desert/orchestration/**
+    - config/geography.yaml
+    - artifacts/data-contracts/**
+  exclude:
+    - .dist/rendered-sql/**
+
+targets:
+  dev:
+    default: true
+    mode: development
+  prod:
+    mode: production
+    workspace:
+      root_path: /Workspace/Users/${workspace.current_user.userName}/.bundle/${bundle.name}/${bundle.target}

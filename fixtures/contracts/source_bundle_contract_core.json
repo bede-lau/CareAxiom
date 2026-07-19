@@ -1,0 +1,69 @@
+{
+  "fixture_version": "2026-07-19.1",
+  "catalog": "databricks_virtue_foundation_dataset_dais_2026",
+  "schema": "virtue_foundation_dataset",
+  "tables": {
+    "facilities": {"rows": 10088, "columns": 51},
+    "india_post_pincode_directory": {"rows": 165627, "columns": 11},
+    "nfhs_5_district_health_indicators": {"rows": 706, "columns": 109}
+  },
+  "facility_integrity": {
+    "uuid_shaped_rows": 10000,
+    "canonical_uuid_entities": 9989,
+    "exact_duplicate_rows": 11,
+    "quarantined_non_uuid_rows": 88
+  },
+  "postal_integrity": {
+    "distinct_pins": 19586,
+    "mappable_pins": 19550,
+    "unavailable_origins": 36,
+    "exact_duplicate_rows": 2,
+    "valid_coordinate_rows": 151015,
+    "unparseable_or_missing_coordinate_rows": 12015,
+    "zero_coordinate_rows": 13,
+    "out_of_envelope_coordinate_rows": 2584
+  },
+  "nfhs_integrity": {
+    "normalized_state_district_keys": 706
+  },
+  "required_contracts": {
+    "bronze": [
+      "source_bundle_manifest",
+      "facility_source_snapshot",
+      "india_post_office_snapshot",
+      "nfhs5_district_snapshot"
+    ],
+    "silver": [
+      "facility_row_integrity",
+      "facility_entity",
+      "facility_normalized",
+      "facility_field_parse",
+      "source_artifact",
+      "facility_claim",
+      "extraction_assertion",
+      "evidence_span",
+      "evidence_relation",
+      "facility_quality_signal",
+      "web_evidence",
+      "claim_validation",
+      "postal_office_normalized",
+      "pin_postal_reference",
+      "analysis_origin",
+      "district_identity_crosswalk",
+      "nfhs_indicator_observation",
+      "district_survey_context",
+      "geography_dimension",
+      "capability_dimension"
+    ],
+    "gold": [
+      "facility_documentary_support",
+      "regional_documentary_evidence_summary",
+      "analysis_origin_facility_distance",
+      "district_context_profile",
+      "planning_priority_candidate",
+      "verification_priority",
+      "facility_evidence_document",
+      "scenario_change_feed"
+    ]
+  }
+}

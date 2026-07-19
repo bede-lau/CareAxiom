@@ -1,0 +1,25 @@
+{
+  "fixture_version": "2026-07-19.1",
+  "india_envelope": {
+    "longitude": [68.0, 98.0],
+    "latitude": [6.5, 39.0]
+  },
+  "cases": [
+    {"case_id": "pin-valid", "pincode": "846004", "latitude": "26.1542", "longitude": "85.8918", "expected_disposition": "valid"},
+    {"case_id": "pin-valid-boundary-min", "pincode": "100001", "latitude": "6.5", "longitude": "68", "expected_disposition": "valid"},
+    {"case_id": "pin-valid-boundary-max", "pincode": "100002", "latitude": "39", "longitude": "98", "expected_disposition": "valid"},
+    {"case_id": "pin-zero-string", "pincode": "100003", "latitude": "0", "longitude": "0", "expected_disposition": "zero_coordinate"},
+    {"case_id": "pin-zero-decimal", "pincode": "100004", "latitude": "0.0", "longitude": "0.0", "expected_disposition": "zero_coordinate"},
+    {"case_id": "pin-na", "pincode": "100005", "latitude": "NA", "longitude": "NA", "expected_disposition": "unparseable_or_missing"},
+    {"case_id": "pin-blank", "pincode": "100006", "latitude": " ", "longitude": "", "expected_disposition": "unparseable_or_missing"},
+    {"case_id": "pin-malformed", "pincode": "100007", "latitude": "north", "longitude": "east", "expected_disposition": "unparseable_or_missing"},
+    {"case_id": "pin-outside-latitude", "pincode": "100008", "latitude": "40", "longitude": "80", "expected_disposition": "out_of_envelope"},
+    {"case_id": "pin-outside-longitude", "pincode": "100009", "latitude": "25", "longitude": "99", "expected_disposition": "out_of_envelope"},
+    {"case_id": "pin-negative", "pincode": "100010", "latitude": "-10", "longitude": "80", "expected_disposition": "out_of_envelope"},
+    {"case_id": "pin-repeated-office-a", "pincode": "846004", "latitude": "26.1542", "longitude": "85.8918", "district": "Darbhanga", "state": "Bihar", "expected_disposition": "valid"},
+    {"case_id": "pin-repeated-office-b", "pincode": "846004", "latitude": "26.1600", "longitude": "85.9000", "district": "Darbhanga", "state": "Bihar", "expected_disposition": "valid"},
+    {"case_id": "pin-exact-duplicate", "pincode": "846004", "latitude": "26.1600", "longitude": "85.9000", "district": "Darbhanga", "state": "Bihar", "expected_disposition": "exact_duplicate"},
+    {"case_id": "pin-ambiguous-district-a", "pincode": "560001", "latitude": "12.9716", "longitude": "77.5946", "district": "Bengaluru Urban", "state": "Karnataka", "expected_disposition": "valid"},
+    {"case_id": "pin-ambiguous-district-b", "pincode": "560001", "latitude": "12.9720", "longitude": "77.5950", "district": "Bangalore", "state": "Karnataka", "expected_disposition": "valid"}
+  ]
+}

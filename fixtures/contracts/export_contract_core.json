@@ -1,0 +1,31 @@
+{
+  "fixture_version": "2026-07-19.1",
+  "required_json_fields": [
+    "scenario_id",
+    "assumptions",
+    "citations",
+    "uncertainty",
+    "source_bundle_id",
+    "policy_version",
+    "saved_snapshot_version",
+    "facility_ids",
+    "result_classification"
+  ],
+  "required_csv_columns": [
+    "scenario_id",
+    "facility_id",
+    "result_classification",
+    "assumptions",
+    "citations",
+    "uncertainty",
+    "source_bundle_id",
+    "policy_version",
+    "saved_snapshot_version"
+  ],
+  "forbidden_brief_phrases": [
+    "chain of thought",
+    "hidden reasoning",
+    "confirmed medical desert",
+    "real-time availability confirmed"
+  ]
+}

@@ -1,0 +1,57 @@
+[project]
+name = "medical-desert-planner"
+version = "0.1.0"
+description = "Evidence-grounded Medical Desert Planner backend"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "databricks-sdk>=0.89.0,<1",
+  "databricks-sql-connector>=4.1.2,<5",
+  "fastapi>=0.116.1,<1",
+  "httpx>=0.28.1,<1",
+  "mlflow==3.14.0",
+  "psycopg[binary,pool]>=3.2.9,<4",
+  "pydantic-settings>=2.10.1,<3",
+  "pyyaml>=6.0.2,<7",
+  "tavily-python>=0.7.12,<1",
+  "uvicorn[standard]>=0.35.0,<1",
+]
+
+[dependency-groups]
+dev = [
+  "hypothesis>=6.138.0,<7",
+  "mypy>=1.17.1,<2",
+  "playwright>=1.55.0,<2",
+  "pytest>=8.4.1,<9",
+  "pytest-cov>=6.2.1,<7",
+  "ruff>=0.12.5,<1",
+  "types-pyyaml>=6.0.12.20250516",
+]
+
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/medical_desert"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+extend-exclude = ["src/medical_desert/orchestration"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.ruff.lint.per-file-ignores]
+"src/medical_desert/api/main.py" = ["B008"]
+
+[tool.mypy]
+python_version = "3.12"
+plugins = ["pydantic.mypy"]
+strict = true
+packages = ["medical_desert"]
+exclude = ["src/medical_desert/orchestration"]

@@ -1,0 +1,33 @@
+version: capability-policy-2026-07-19
+approved_for_demo: true
+policies:
+  maternal_emergency_documentation:
+    label: Maternal emergency documentation
+    description: Documentary support for obstetric expertise plus C-section capability.
+    required_all:
+      - obstetrics
+      - c_section
+    synonyms:
+      obstetrics: [gynecologyAndObstetrics, obstetricsAndMaternityCare, obstetric]
+      c_section: [c-section, caesarean, cesarean]
+    default_radius_km: 25
+  emergency_surgery_documentation:
+    label: Emergency surgery documentation
+    description: Documentary support for emergency medicine plus general surgery.
+    required_all:
+      - emergency_medicine
+      - general_surgery
+    synonyms:
+      emergency_medicine: [emergencyMedicine, emergency care, trauma care]
+      general_surgery: [generalSurgery, general surgery, emergency surgery]
+    default_radius_km: 25
+  advanced_imaging_documentation:
+    label: Advanced imaging documentation
+    description: Documentary support for both CT and MRI imaging.
+    required_all:
+      - ct
+      - mri
+    synonyms:
+      ct: [CT scanner, CT imaging, computed tomography]
+      mri: [MRI scanner, MRI imaging, magnetic resonance imaging]
+    default_radius_km: 25

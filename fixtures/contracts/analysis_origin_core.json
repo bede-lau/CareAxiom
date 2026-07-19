@@ -1,0 +1,28 @@
+{
+  "fixture_version": "2026-07-19.1",
+  "cases": [
+    {
+      "origin_id": "pin:846004",
+      "pincode": "846004",
+      "postal_reference_point": {"latitude": 26.1571, "longitude": 85.8959, "method": "median"},
+      "nearby_facility_ids": ["darbhanga-facility-01", "darbhanga-facility-02"],
+      "expected_status": "available"
+    },
+    {
+      "origin_id": "pin:000001",
+      "pincode": "000001",
+      "postal_reference_point": {"latitude": 25.0, "longitude": 85.0, "method": "median"},
+      "nearby_facility_ids": [],
+      "expected_status": "insufficient_corpus_evidence",
+      "expected_message": "no observed records"
+    },
+    {
+      "origin_id": "pin:000002",
+      "pincode": "000002",
+      "postal_reference_point": null,
+      "nearby_facility_ids": [],
+      "expected_status": "unavailable_analysis",
+      "unavailable_reason": "no_valid_postal_coordinate"
+    }
+  ]
+}

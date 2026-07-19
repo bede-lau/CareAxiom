@@ -1,0 +1,4 @@
+command:
+  - python
+  - -m
+  - medical_desert.api.main

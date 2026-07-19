@@ -1,0 +1,4 @@
+resources:
+  experiments:
+    medical_desert:
+      name: /Shared/${bundle.name}/${bundle.target}/orchestration

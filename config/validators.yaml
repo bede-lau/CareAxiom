@@ -1,0 +1,24 @@
+version: validators-2026-07-19
+stale_after_days: 730
+blocked_url_schemes: [file, ftp, gopher, data, javascript]
+private_hosts:
+  - localhost
+  - 127.0.0.1
+  - 169.254.169.254
+  - metadata.google.internal
+rules:
+  - structurally_shifted_row
+  - malformed_json_like_field
+  - duplicate_uuid_row
+  - duplicate_evidence_family
+  - cross_facility_attribution
+  - name_only_specialty_inference
+  - missing_capability_prerequisite
+  - contradictory_capacity
+  - contradictory_clinician_count
+  - malformed_geography
+  - invalid_postal_coordinate
+  - ambiguous_pin_district
+  - nfhs_qualifier_discarded
+  - stale_or_inaccessible_source
+  - external_evidence_facility_mismatch

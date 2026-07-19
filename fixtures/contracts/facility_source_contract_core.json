@@ -1,0 +1,149 @@
+{
+  "fixture_version": "2026-07-19.1",
+  "cases": [
+    {
+      "case_id": "facility-valid-arrays",
+      "unique_id": "11111111-1111-4111-8111-111111111111",
+      "raw_value": "[\"CT\", \"MRI\"]",
+      "expected_parsed": ["CT", "MRI"],
+      "parse_status": "parsed",
+      "disposition": "accepted",
+      "quality_flags": []
+    },
+    {
+      "case_id": "facility-empty-array",
+      "unique_id": "22222222-2222-4222-8222-222222222222",
+      "raw_value": "[]",
+      "expected_parsed": [],
+      "parse_status": "parsed",
+      "disposition": "accepted",
+      "quality_flags": ["empty_evidence"]
+    },
+    {
+      "case_id": "facility-json-null",
+      "unique_id": "33333333-3333-4333-8333-333333333333",
+      "raw_value": "null",
+      "expected_parsed": null,
+      "parse_status": "null",
+      "disposition": "partially_parsed",
+      "quality_flags": ["missing_value"]
+    },
+    {
+      "case_id": "facility-string-null",
+      "unique_id": "44444444-4444-4444-8444-444444444444",
+      "raw_value": "\"null\"",
+      "expected_parsed": null,
+      "parse_status": "null_string",
+      "disposition": "partially_parsed",
+      "quality_flags": ["missing_value"]
+    },
+    {
+      "case_id": "facility-malformed-json",
+      "unique_id": "55555555-5555-4555-8555-555555555555",
+      "raw_value": "[\"CT\", \"MRI\"",
+      "expected_parsed": null,
+      "parse_status": "unparseable",
+      "disposition": "partially_parsed",
+      "quality_flags": ["malformed_json"]
+    },
+    {
+      "case_id": "facility-escaped-delimiter",
+      "unique_id": "66666666-6666-4666-8666-666666666666",
+      "raw_value": "[\"Emergency, trauma and surgery\", \"24/7\"]",
+      "expected_parsed": ["Emergency, trauma and surgery", "24/7"],
+      "parse_status": "parsed",
+      "disposition": "accepted",
+      "quality_flags": []
+    },
+    {
+      "case_id": "facility-non-array-json",
+      "unique_id": "77777777-7777-4777-8777-777777777777",
+      "raw_value": "{\"capability\":\"MRI\"}",
+      "expected_parsed": null,
+      "parse_status": "wrong_shape",
+      "disposition": "partially_parsed",
+      "quality_flags": ["expected_array"]
+    },
+    {
+      "case_id": "facility-shifted-row",
+      "unique_id": "88888888-8888-4888-8888-888888888888",
+      "raw_value": "Bihar",
+      "expected_parsed": null,
+      "parse_status": "domain_mismatch",
+      "disposition": "quarantined",
+      "quality_flags": ["structural_shift"]
+    },
+    {
+      "case_id": "facility-spillover-row",
+      "unique_id": "continuation of a long description",
+      "raw_value": "[\"general surgery\"]",
+      "expected_parsed": null,
+      "parse_status": "not_evaluated",
+      "disposition": "quarantined",
+      "quality_flags": ["non_uuid_identifier"]
+    },
+    {
+      "case_id": "facility-exact-duplicate-primary",
+      "unique_id": "99999999-9999-4999-8999-999999999999",
+      "raw_value": "[\"emergency medicine\"]",
+      "expected_parsed": ["emergency medicine"],
+      "parse_status": "parsed",
+      "disposition": "accepted",
+      "quality_flags": []
+    },
+    {
+      "case_id": "facility-exact-duplicate-repeat",
+      "unique_id": "99999999-9999-4999-8999-999999999999",
+      "raw_value": "[\"emergency medicine\"]",
+      "expected_parsed": ["emergency medicine"],
+      "parse_status": "parsed",
+      "disposition": "exact_duplicate",
+      "quality_flags": ["duplicate_source_row"]
+    },
+    {
+      "case_id": "facility-missing-capacity",
+      "unique_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "raw_value": null,
+      "expected_parsed": null,
+      "parse_status": "missing",
+      "disposition": "accepted",
+      "quality_flags": ["capacity_unknown"]
+    },
+    {
+      "case_id": "facility-zero-capacity",
+      "unique_id": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+      "raw_value": "0",
+      "expected_parsed": 0,
+      "parse_status": "parsed",
+      "disposition": "accepted",
+      "quality_flags": ["reported_zero"]
+    },
+    {
+      "case_id": "facility-name-only-inference",
+      "unique_id": "cccccccc-cccc-4ccc-8ccc-cccccccccccc",
+      "raw_value": "Darbhanga Trauma Centre",
+      "expected_parsed": null,
+      "parse_status": "not_evidence",
+      "disposition": "accepted",
+      "quality_flags": ["name_only_inference_forbidden"]
+    },
+    {
+      "case_id": "facility-negated-claim",
+      "unique_id": "dddddddd-dddd-4ddd-8ddd-dddddddddddd",
+      "raw_value": "MRI is not available at this facility.",
+      "expected_parsed": {"capability": "MRI", "polarity": "negative"},
+      "parse_status": "parsed",
+      "disposition": "accepted",
+      "quality_flags": ["explicit_negation"]
+    },
+    {
+      "case_id": "facility-historical-claim",
+      "unique_id": "eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee",
+      "raw_value": "The hospital operated a CT scanner until 2019.",
+      "expected_parsed": {"capability": "CT", "temporality": "historical"},
+      "parse_status": "parsed",
+      "disposition": "accepted",
+      "quality_flags": ["historical_not_current"]
+    }
+  ]
+}

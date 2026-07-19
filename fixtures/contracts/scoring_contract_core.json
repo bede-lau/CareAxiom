@@ -1,0 +1,61 @@
+{
+  "fixture_version": "2026-07-19.1",
+  "factor_maxima": {
+    "direct_evidence_specificity": 30,
+    "independent_source_corroboration": 20,
+    "source_quality": 15,
+    "entity_attribution_quality": 15,
+    "freshness": 10,
+    "prerequisite_support": 10
+  },
+  "cases": [
+    {
+      "case_id": "score-strong",
+      "factors": {"direct_evidence_specificity": 30, "independent_source_corroboration": 20, "source_quality": 15, "entity_attribution_quality": 15, "freshness": 10, "prerequisite_support": 10},
+      "contradiction_state": "none",
+      "expected_index": 100,
+      "expected_band": "strongly_supported"
+    },
+    {
+      "case_id": "score-partial-boundary",
+      "factors": {"direct_evidence_specificity": 20, "independent_source_corroboration": 10, "source_quality": 8, "entity_attribution_quality": 7, "freshness": 3, "prerequisite_support": 2},
+      "contradiction_state": "none",
+      "expected_index": 50,
+      "expected_band": "partially_supported"
+    },
+    {
+      "case_id": "score-claim-only-boundary",
+      "factors": {"direct_evidence_specificity": 15, "independent_source_corroboration": 0, "source_quality": 5, "entity_attribution_quality": 5, "freshness": 0, "prerequisite_support": 0},
+      "contradiction_state": "none",
+      "expected_index": 25,
+      "expected_band": "claim_only_or_weak"
+    },
+    {
+      "case_id": "score-unsupported",
+      "factors": {"direct_evidence_specificity": 10, "independent_source_corroboration": 0, "source_quality": 3, "entity_attribution_quality": 5, "freshness": 0, "prerequisite_support": 0},
+      "contradiction_state": "none",
+      "expected_index": 18,
+      "expected_band": "unsupported_or_very_weak"
+    },
+    {
+      "case_id": "score-unresolved-contradiction",
+      "factors": {"direct_evidence_specificity": 30, "independent_source_corroboration": 20, "source_quality": 15, "entity_attribution_quality": 15, "freshness": 10, "prerequisite_support": 10},
+      "contradiction_state": "unresolved",
+      "expected_index": 100,
+      "expected_band": "abstain_or_policy_capped"
+    },
+    {
+      "case_id": "score-confirmed-contradiction",
+      "factors": {"direct_evidence_specificity": 30, "independent_source_corroboration": 20, "source_quality": 15, "entity_attribution_quality": 15, "freshness": 10, "prerequisite_support": 10},
+      "contradiction_state": "confirmed",
+      "expected_index": 100,
+      "expected_band": "contradicted"
+    }
+  ],
+  "priority_cases": [
+    {"case_id": "priority-zero", "inputs": [0, 0, 0, 0, 0], "expected": 0.0},
+    {"case_id": "priority-mid", "inputs": [0.5, 0.4, 0.3, 0.2, 0.1], "expected": 0.385},
+    {"case_id": "priority-max", "inputs": [1, 1, 1, 1, 1], "expected": 1.0},
+    {"case_id": "priority-clamped", "inputs": [2, 2, 2, 2, 2], "expected": 1.0}
+  ]
+}

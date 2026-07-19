@@ -82,6 +82,10 @@ class DatabricksGoldAnalyticsAdapter:
         return "uncertain"
 
     @staticmethod
+    def _array_values(value: Any) -> list[Any]:
+        return [] if value is None else list(value)
+
+    @staticmethod
     def _qualifier(
         value: Any,
     ) -> Literal["standard", "low_sample_25_49", "suppressed_lt_25", "unparseable"]:
@@ -395,11 +399,11 @@ class DatabricksGoldAnalyticsAdapter:
                 freshness=round(float(row["freshness"])),
                 prerequisite_support=round(float(row["prerequisite_support"])),
             ),
-            missing_prerequisites=list(row.get("exclusion_reasons") or []),
+            missing_prerequisites=self._array_values(row.get("exclusion_reasons")),
             contradictions=(
                 [] if contradiction == ContradictionState.NONE else [contradiction.value]
             ),
-            evidence_ids=list(row.get("evidence_span_ids") or []),
+            evidence_ids=self._array_values(row.get("evidence_span_ids")),
             rule_version=str(row["policy_version"]),
             machine_assessed_at=row["calculated_at"],
         )

@@ -14,6 +14,11 @@ from medical_desert.domain.models import (
 )
 
 
+class AmbiguousArray(list[str]):
+    def __bool__(self) -> bool:
+        raise ValueError("The truth value of an array is ambiguous.")
+
+
 class FakeSQL:
     def __init__(self) -> None:
         self.statements: list[tuple[str, list[Any]]] = []
@@ -55,8 +60,8 @@ class FakeSQL:
                     "entity_attribution_quality": 15.0,
                     "freshness": 7.0,
                     "prerequisite_support": 10.0,
-                    "exclusion_reasons": [],
-                    "evidence_span_ids": ["evidence-1"],
+                    "exclusion_reasons": AmbiguousArray(),
+                    "evidence_span_ids": AmbiguousArray(["evidence-1"]),
                     "policy_version": "documentary-policy-v1",
                     "calculated_at": datetime(2026, 7, 19, tzinfo=UTC),
                 }

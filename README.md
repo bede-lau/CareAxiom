@@ -19,6 +19,16 @@
 
 ---
 
+
+## ▍Project gallery
+
+<table><tr>
+<td width="50%"><img src="https://raw.githubusercontent.com/bede-lau/bede-lau.github.io/main/assets/img/careaxiom/careaxiom_1.png" alt="CareAxiom project screenshot, first view" /></td>
+<td width="50%"><img src="https://raw.githubusercontent.com/bede-lau/bede-lau.github.io/main/assets/img/careaxiom/careaxiom_2.png" alt="CareAxiom project screenshot, second view" /></td>
+</tr></table>
+
+<sub>Images from the [project portfolio](https://bede-lau.github.io/); they may depict an earlier build.</sub>
+
 ## ▍The problem
 
 A planner looking at a facility catalog cannot treat a row as "this hospital can do a C-section today." The text can be stale, attributed to the wrong place, or silent. Silence is not a measured absence of care. A district survey percentage is a different kind of number, and mixing the two produces a false gap.

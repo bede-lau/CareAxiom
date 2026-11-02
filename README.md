@@ -2,6 +2,13 @@
 <p align="center">🏆 <b>3rd place · Databricks “Data Legend” challenge</b><br/><sub>Hack-Nation 6th Global AI Hackathon · <a href="https://www.linkedin.com/company/hack-nation">Organizer's winners announcement</a></sub></p>
 <p align="center"><b>Turn fragmented facility evidence into a planning view with uncertainty left visible.</b><br/><sub>Documentary support + separately presented district survey context</sub></p>
 
+<p align="center">
+  <img alt="Python" src="https://img.shields.io/badge/Python-3776ab?style=flat-square" />
+  <img alt="FastAPI" src="https://img.shields.io/badge/FastAPI-008577?style=flat-square" />
+  <img alt="Databricks" src="https://img.shields.io/badge/Databricks-cc3d35?style=flat-square" />
+  <img alt="Playwright" src="https://img.shields.io/badge/Playwright-2e7d32?style=flat-square" />
+</p>
+
 ## ▍Project gallery
 
 <table><tr>

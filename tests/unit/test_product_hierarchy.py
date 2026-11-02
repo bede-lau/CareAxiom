@@ -13,9 +13,9 @@ def test_referral_copilot_is_disabled_by_default() -> None:
 
 
 @pytest.mark.gate("G4")
-def test_frontend_declares_medical_desert_planner_as_primary_product(repo_root: Path) -> None:
+def test_frontend_declares_careaxiom_with_planner_as_default_view(repo_root: Path) -> None:
     app = (repo_root / "frontend" / "src" / "App.tsx").read_text(encoding="utf-8")
-    assert "Medical Desert Planner" in app
+    assert "<strong>CareAxiom</strong>" in app
     assert 'useState<ViewId>("planner")' in app
 
 

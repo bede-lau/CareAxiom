@@ -2,6 +2,16 @@
 <p align="center">🏆 <b>3rd place · Databricks “Data Legend” challenge</b><br/><sub>Hack-Nation 6th Global AI Hackathon · <a href="https://www.linkedin.com/company/hack-nation">Organizer's winners announcement</a></sub></p>
 <p align="center"><b>Turn fragmented facility evidence into a planning view with uncertainty left visible.</b><br/><sub>Documentary support + separately presented district survey context</sub></p>
 
+## ▍Project gallery
+
+<table><tr>
+<td width="50%"><img src="https://raw.githubusercontent.com/bede-lau/bede-lau.github.io/main/assets/img/careaxiom/careaxiom_1.png" alt="CareAxiom project screenshot, first view" /></td>
+<td width="50%"><img src="https://raw.githubusercontent.com/bede-lau/bede-lau.github.io/main/assets/img/careaxiom/careaxiom_2.png" alt="CareAxiom project screenshot, second view" /></td>
+</tr></table>
+
+<sub>Images from the [project portfolio](https://bede-lau.github.io/); they may depict an earlier build.</sub>
+
+
 ## ▍The question
 
 How can a planner compare nearby facilities without mistaking a document, a survey statistic, or a geographic match for proof that a service is currently available? CareAxiom's Medical Desert Planner brings those evidence streams together while keeping their limits explicit.

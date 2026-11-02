@@ -1,4 +1,33 @@
-# Medical Desert Planner
+<h1 align="center">CareAxiom</h1>
+<p align="center">🏆 <b>3rd place · Databricks “Data Legend” challenge</b><br/><sub>Hack-Nation 6th Global AI Hackathon · <a href="https://www.linkedin.com/company/hack-nation">Organizer's winners announcement</a></sub></p>
+<p align="center"><b>Turn fragmented facility evidence into a planning view with uncertainty left visible.</b><br/><sub>Documentary support + separately presented district survey context</sub></p>
+
+## ▍The question
+
+How can a planner compare nearby facilities without mistaking a document, a survey statistic, or a geographic match for proof that a service is currently available? CareAxiom's Medical Desert Planner brings those evidence streams together while keeping their limits explicit.
+
+## ▍Evidence flow
+
+```mermaid
+flowchart LR
+  A["Facility records<br/>and documentary evidence"] --> B["Adapters + identity<br/>and geography review"]
+  B --> C["Policy matching<br/>and scoring"]
+  D["NFHS-5 district<br/>survey context"] --> E["Planning application"]
+  C --> E
+  E --> F["Facility comparison<br/>and review"]
+  G["Deterministic Darbhanga<br/>offline fixture"] --> B
+  H["Databricks / Lakebase<br/>when configured"] --> B
+```
+
+| Evidence | What it can establish | What it cannot establish alone |
+| --- | --- | --- |
+| Facility documents | Documentary support for a policy match | Current service availability or capacity |
+| NFHS-5 district context | District-level survey context | Conditions at an individual facility |
+| Geography and identity | A reviewable basis for matching | A confident match when records conflict |
+
+The offline fixture includes 15 facility records and keeps two high-priority geography conflicts out of confident aggregation pending review. The app does **not** establish that an area is a medical desert.
+
+---
 
 Medical Desert Planner is an evidence-grounded planning application for comparing nearby facility documentary support with separately presented NFHS-5 district survey context. It does not confirm current service availability, capacity, or a medical desert.
 

@@ -41,6 +41,25 @@ The offline fixture includes 15 facility records and keeps two high-priority geo
 
 Medical Desert Planner is an evidence-grounded planning application for comparing nearby facility documentary support with separately presented NFHS-5 district survey context. It does not confirm current service availability, capacity, or a medical desert.
 
+## ▍From source rows to a reviewable decision
+
+| Stage | Repository path | Purpose |
+| --- | --- | --- |
+| Profile and preserve | [`pipelines/00_profile_source.py`](pipelines/00_profile_source.py), [`01_snapshot_bronze.py`](pipelines/01_snapshot_bronze.py) | Profile source records and preserve a bronze snapshot. |
+| Normalize and locate | `pipelines/02_*.py`–`06_*.py` | Validate facility rows, normalize records and build postal/district geography and survey context. |
+| Extract and verify | `pipelines/07_*.py`–`09_*.py` | Extract evidence, validate claims and review high-impact information. |
+| Score and queue | `pipelines/10_*.py`–`12_*.py` | Compute documentary support, regional evidence and a verification queue. |
+| Review and save | [`src/medical_desert/`](src/medical_desert/), [`frontend/`](frontend/) | Serve the planner, review flows and saved scenarios. |
+
+### What the checks protect
+
+The [G0–G7 test strategy](docs/test-strategy.md) covers fixture hashes, geography conflicts, scoring, immutable scenario history, audit/outbox behavior and browser workflows. The NFHS district values remain context: they do not change a facility's documentary support score. A missing number is not silently converted into zero, and a parse failure is not treated as an empty record.
+
+Connected Databricks checks are separate from the default offline tests. The committed fixture values below are a reproducible demo contract, not an accuracy estimate for live healthcare data.
+
+---
+
+
 ## Prerequisites
 
 - Python 3.12
